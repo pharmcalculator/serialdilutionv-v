@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serial Dilution (v/v) Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 18px; /* Increased font size */
+    text-align: center;
+  }
+  h2 {
+    color: #333;
+  }
+  label {
+    margin-right: 10px;
+  }
+  input[type="text"], input[type="number"], select, input[type="submit"], input[type="reset"] {
+    padding: 10px; /* Increased padding */
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px; /* Increased font size */
+  }
+  input[type="submit"], input[type="reset"] {
+    width: 150px; /* Increased width */
+  }
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  input[type="reset"] {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .container {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .note {
+    color: #777;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Serial Dilution (v/v) Calculator</h2>
+  <form id="volumeCalculator">
+    <label for="initialConcentration">Initial Concentration (e.g., 1/400):</label>
+    <input type="text" id="initialConcentration" name="initialConcentration" placeholder="Enter initial concentration" required><br>
+    
+    <label for="finalConcentration">Final Concentration (e.g., 1/2000):</label>
+    <input type="text" id="finalConcentration" name="finalConcentration" placeholder="Enter final concentration" required><br>
+    
+    <label for="volumeChoice">Calculate:</label>
+    <select id="volumeChoice" name="volumeChoice" required>
+      <option value="">Choose one</option>
+      <option value="initial">Initial Volume</option>
+      <option value="final">Final Volume</option>
+    </select><br>
+    
+    <label for="volume">Volume (mL):</label> 
+    <input type="number" id="volume" name="volume" min="0" step="any" placeholder="Enter volume" required><br>
+    
+    <div id="result"></div>
+    
+    <input type="submit" value="Calculate">
+    <input type="reset" value="Reset">
+  </form>
+  <p class="note">Note: If calculating the final volume, the volume entered will be the initial volume, and vice versa.</p>
+</div>
+
+<script>
+document.getElementById('volumeCalculator').addEventListener('submit', function(event) {
+  event.preventDefault();
+  var initialConcentration = eval(document.getElementById('initialConcentration').value);
+  var finalConcentration = eval(document.getElementById('finalConcentration').value);
+  var volume = parseFloat(document.getElementById('volume').value);
+  var choice = document.getElementById('volumeChoice').value;
+  var resultContainer = document.getElementById('result');
+  
+  if (choice === 'initial') {
+    var initialVolume = (volume * finalConcentration) / initialConcentration;
+    resultContainer.innerHTML = 'Initial Volume: ' + initialVolume.toFixed(2) + ' mL';
+  } else if (choice === 'final') {
+    var finalVolume = (volume * initialConcentration) / finalConcentration;
+    resultContainer.innerHTML = 'Final Volume: ' + finalVolume.toFixed(2) + ' mL';
+  }
+});
+</script>
+</body>
+</html>
